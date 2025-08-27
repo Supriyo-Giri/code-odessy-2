@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plumbing Service Billing</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f8ff;
+            color: #333;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #0072b5, #00a8e8);
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .progress-bar {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px auto;
+            max-width: 600px;
+            position: relative;
+        }
+        
+        .progress-step {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            z-index: 2;
+            border: 2px solid #0072b5;
+        }
+        
+        .progress-step.active {
+            background: #0072b5;
+            color: white;
+        }
+        
+        .progress-step.completed {
+            background: #4caf50;
+            color: white;
+            border-color: #4caf50;
+        }
+        
+        .progress-bar::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #0072b5;
+            z-index: 1;
+        }
+        
+        .step-label {
+            position: absolute;
+            top: 35px;
+            font-size: 12px;
+            color: #0072b5;
+            width: 80px;
+            left: -25px;
+            text-align: center;
+        }
+        
+        .billing-content {
+            padding: 30px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .billing-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .form-section {
+            background: #f9fafc;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #0072b5;
+        }
+        
+        h2 {
+            color: #0072b5;
+            margin-bottom: 15px;
+            font-size: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #555;
+        }
+        
+        select, input, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .checkbox-group input {
+            width: auto;
+            margin-right: 10px;
+        }
+        
+        .service-option {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 10px;
+            background: #fff;
+            border-radius: 6px;
+            border: 1px solid #eee;
+        }
+        
+        .service-option:hover {
+            border-color: #0072b5;
+        }
+        
+        .summary-section {
+            background: #e6f7ff;
+            border-radius: 10px;
+            padding: 20px;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+        
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #ccefff;
+        }
+        
+        .total {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0072b5;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px dashed #0072b5;
+        }
+        
+        .payment-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .payment-option {
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .payment-option:hover {
+            border-color: #0072b5;
+            background: #f0f8ff;
+        }
+        
+        .payment-option.selected {
+            border-color: #0072b5;
+            background: #e6f7ff;
+        }
+        
+        .payment-option i {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #0072b5;
+        }
+        
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 30px;
+            background: #f9fafc;
+            border-top: 1px solid #eee;
+        }
+        
+        .btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .btn-back {
+            background: #f5f7fa;
+            color: #0072b5;
+            border: 1px solid #0072b5;
+        }
+        
+        .btn-back:hover {
+            background: #e8ebf3;
+        }
+        
+        .btn-next {
+            background: #0072b5;
+            color: white;
+        }
+        
+        .btn-next:hover {
+            background: #005a8f;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn i {
+            margin-right: 8px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #777;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+        
+        .discount-badge {
+            background: #ff9900;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+        
+        .address-option {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .address-option:hover {
+            border-color: #0072b5;
+            background: #f0f8ff;
+        }
+        
+        .address-option.selected {
+            border-color: #0072b5;
+            background: #e6f7ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-file-invoice-dollar"></i> Plumbing Service Billing</h1>
+            <p>Review your service details and complete payment</p>
+            
+            <div class="progress-bar">
+                <div class="progress-step completed">
+                    <i class="fas fa-check"></i>
+                    <span class="step-label">Booking</span>
+                </div>
+                <div class="progress-step completed">
+                    <i class="fas fa-check"></i>
+                    <span class="step-label">Details</span>
+                </div>
+                <div class="progress-step active">
+                    3
+                    <span class="step-label">Billing</span>
+                </div>
+                <div class="progress-step">
+                    4
+                    <span class="step-label">Confirmation</span>
+                </div>
+            </div>
+        </header>
+        
+        <div class="billing-content">
+            <div class="left-column">
+                <div class="form-section">
+                    <h2>Service Information</h2>
+                    <div class="form-group">
+                        <label for="service-type">Service Type</label>
+                        <select id="service-type">
+                            <option value="">Select a service</option>
+                            <option value="leak-repair" selected>Leak Repair</option>
+                            <option value="drain-cleaning">Drain Cleaning</option>
+                            <option value="faucet-installation">Faucet Installation</option>
+                            <option value="toilet-repair">Toilet Repair</option>
+                            <option value="water-heater">Water Heater Service</option>
+                            <option value="pipe-replacement">Pipe Replacement</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Service Address</label>
+                        <div class="address-option selected">
+                            <input type="radio" name="address" id="home-address" checked>
+                            <label for="home-address">Home Address</label>
+                            <p>123 Main Street, Apt 4B, New York, NY 10001</p>
+                        </div>
+                        
+                        <div class="address-option">
+                            <input type="radio" name="address" id="office-address">
+                            <label for="office-address">Office Address</label>
+                            <p>456 Business Ave, Suite 300, New York, NY 10002</p>
+                        </div>
+                        
+                        <div class="address-option">
+                            <input type="radio" name="address" id="other-address">
+                            <label for="other-address">Other Address</label>
+                            <p><input type="text" placeholder="Enter custom address"></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h2>Additional Services</h2>
+                    
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="emergency-fee">
+                        <label for="emergency-fee">Emergency Service Fee <span class="discount-badge">+$75</span></label>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="parts-warranty">
+                        <label for="parts-warranty">Extended Parts Warranty <span class="discount-badge">+$49</span></label>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="disposal-fee">
+                        <label for="disposal-fee">Old Parts Disposal <span class="discount-badge">+$25</span></label>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="maintenance-plan">
+                        <label for="maintenance-plan">Annual Maintenance Plan <span class="discount-badge">-$50</span></label>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h2>Payment Method</h2>
+                    <div class="payment-options">
+                        <div class="payment-option selected">
+                            <i class="fas fa-credit-card"></i>
+                            <div>Credit Card</div>
+                        </div>
+                        <div class="payment-option">
+                            <i class="fas fa-university"></i>
+                            <div>Bank Transfer</div>
+                        </div>
+                        <div class="payment-option">
+                            <i class="fab fa-paypal"></i>
+                            <div>PayPal</div>
+                        </div>
+                        <div class="payment-option">
+                            <i class="fas fa-money-bill-wave"></i>
+                            <div>Cash</div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" style="margin-top: 20px;">
+                        <label for="promo-code">Promo Code</label>
+                        <input type="text" id="promo-code" placeholder="Enter promo code if you have one">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="right-column">
+                <div class="summary-section">
+                    <h2>Billing Summary</h2>
+                    
+                    <div class="summary-item">
+                        <div>Service Fee</div>
+                        <div>$145.00</div>
+                    </div>
+                    
+                    <div class="summary-item">
+                        <div>Parts & Materials (estimated)</div>
+                        <div>$85.00</div>
+                    </div>
+                    
+                    <div class="summary-item">
+                        <div>Tax (8.5%)</div>
+                        <div>$19.55</div>
+                    </div>
+                    
+                    <div class="summary-item">
+                        <div>Trip Charge</div>
+                        <div>$30.00</div>
+                    </div>
+                    
+                    <div class="summary-item">
+                        <div>Emergency Service Fee</div>
+                        <div>$0.00</div>
+                    </div>
+                    
+                    <div class="summary-item">
+                        <div>Parts Warranty</div>
+                        <div>$0.00</div>
+                    </div>
+                    
+                    <div class="summary-item">
+                        <div>Disposal Fee</div>
+                        <div>$0.00</div>
+                    </div>
+                    
+                    <div class="summary-item">
+                        <div>Maintenance Plan Discount</div>
+                        <div>$0.00</div>
+                    </div>
+                    
+                    <div class="summary-item">
+                        <div>Promo Discount</div>
+                        <div>$0.00</div>
+                    </div>
+                    
+                    <div class="summary-item total">
+                        <div>Total Amount</div>
+                        <div>$279.55</div>
+                    </div>
+                    
+                    <div class="form-group" style="margin-top: 20px;">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="terms">
+                            <label for="terms">I agree to the <a href="#">terms and conditions</a></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="button-container">
+            <a href="./book-service.html"><button class="btn btn-back">
+                <i class="fas fa-arrow-left"></i> Previous Step
+            </button></a>
+            <a href="./booking-confirmed.html"><button class="btn btn-next">
+                Continue to Payment <i class="fas fa-arrow-right"></i>
+            </button></a>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Need help with your billing? Contact us at support@plumbpro.com or call 1-800-PLUMBER</p>
+        <p>© 2023 PlumbPro. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Payment option selection
+        document.querySelectorAll('.payment-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.payment-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                this.classList.add('selected');
+            });
+        });
+        
+        // Address selection
+        document.querySelectorAll('.address-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.address-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                this.classList.add('selected');
+                this.querySelector('input[type="radio"]').checked = true;
+            });
+        });
+        
+        // Update billing summary when additional services are selected
+        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', updateBillingSummary);
+        });
+        
+        function updateBillingSummary() {
+            // This function would update the billing summary based on selected options
+            console.log("Billing summary updated");
+        }
+        
+        // Navigation buttons functionality
+        document.querySelector('.btn-back').addEventListener('click', function() {
+            alert('Going back to previous step...');
+            // window.history.back(); // Uncomment for real implementation
+        });
+        
+        document.querySelector('.btn-next').addEventListener('click', function() {
+            alert('Proceeding to payment...');
+            // window.location.href = 'payment.html'; // Uncomment for real implementation
+        });
+    </script>
+</body>
+</html>

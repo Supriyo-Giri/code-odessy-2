@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Instamart – Demo Clone</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com  ">
+    <link rel="preconnect" href="https://fonts.gstatic.com  " crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --text: #111315;
+            --muted: #6b6f76;
+            --card: #f8f8fa;
+            --chip: #f3f4f6;
+            --accent: #00a082;
+            /* teal-ish add button */
+            --brand: #f05a28;
+            /* bolt */
+            --ring: rgba(0, 0, 0, .08);
+            --shadow: 0 2px 10px rgba(0, 0, 0, .06), 0 1px 3px rgba(0, 0, 0, .06);
+            --radius: 16px;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html,
+        body {
+            height: 100%
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: Poppins, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.35;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px
+        }
+
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: var(--bg);
+            border-bottom: 1px solid #eee
+        }
+
+        .header-wrap {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            height: 72px
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 24px;
+            letter-spacing: .2px
+        }
+
+        .bolt {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            color: var(--muted);
+            font-size: 14px
+        }
+
+        .bolt svg {
+            width: 16px;
+            height: 16px;
+            color: var(--brand)
+        }
+
+        .spacer {
+            flex: 1
+        }
+
+        .search-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 999px;
+            display: grid;
+            place-items: center;
+            border: 1px solid #e6e6e6;
+            background: #fff
+        }
+
+        .search-btn svg {
+            width: 20px;
+            height: 20px;
+            color: #333
+        }
+
+        /* Top category grid */
+        .section {
+            padding: 24px 0
+        }
+
+        .section h2 {
+            font-size: 22px;
+            margin: 0 0 16px
+        }
+
+        .top-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 16px
+        }
+
+        @media (max-width:1000px) {
+            .top-grid {
+                grid-template-columns: repeat(4, 1fr)
+            }
+        }
+
+        @media (max-width:700px) {
+            .top-grid {
+                grid-template-columns: repeat(3, 1fr)
+            }
+        }
+
+        @media (max-width:480px) {
+            .top-grid {
+                grid-template-columns: repeat(2, 1fr)
+            }
+        }
+
+        .cat-card {
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 20px;
+            padding: 14px;
+            box-shadow: var(--shadow);
+            position: relative;
+            transition: transform .15s ease, box-shadow .15s ease
+        }
+
+        .cat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 22px rgba(0, 0, 0, .08)
+        }
+
+        .cat-img {
+            height: 72px;
+            background: linear-gradient(180deg, #f8fafc, #eef2f7);
+            border-radius: 14px;
+            margin-bottom: 10px
+        }
+
+        .cat-title {
+            font-size: 13px;
+            color: #333
+        }
+
+        .discount {
+            position: absolute;
+            bottom: 10px;
+            left: 12px;
+            background: #e9fff6;
+            color: #198754;
+            border: 1px solid #b7f0d9;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 999px
+        }
+
+        /* Banner */
+        .banner {
+            background: #ffe1cf;
+            border-radius: 18px;
+            height: 96px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            letter-spacing: .2px;
+            border: 1px dashed #f3b292
+        }
+
+        /* Hot deals carousel */
+        .row-between {
+            display: flex;
+            align-items: center;
+            justify-content: space-between
+        }
+
+        .strip {
+            position: relative
+        }
+
+        .rail {
+            display: flex;
+            gap: 16px;
+            overflow: auto;
+            scroll-snap-type: x mandatory;
+            padding-bottom: 8px
+        }
+
+        .rail::-webkit-scrollbar {
+            height: 8px
+        }
+
+        .rail::-webkit-scrollbar-thumb {
+            background: #e5e7eb;
+            border-radius: 999px
+        }
+
+        .deal-card {
+            min-width: 210px;
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 20px;
+            padding: 12px;
+            scroll-snap-align: start;
+            box-shadow: var(--shadow);
+            position: relative
+        }
+
+        .deal-img {
+            height: 140px;
+            border-radius: 14px;
+            background: linear-gradient(180deg, #f7f7fb, #eef2f7)
+        }
+
+        .deal-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 12px
+        }
+
+        .tag {
+            font-size: 10px;
+            font-weight: 700;
+            color: #22c55e;
+            background: #eafff3;
+            border: 1px solid #c9f7d7;
+            padding: 2px 6px;
+            border-radius: 6px
+        }
+
+        .plus {
+            position: absolute;
+            right: 12px;
+            top: 12px;
+            width: 36px;
+            height: 36px;
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 999px;
+            display: grid;
+            place-items: center;
+            box-shadow: var(--shadow);
+            cursor: pointer
+        }
+
+        .plus svg {
+            width: 18px;
+            height: 18px;
+            color: var(--accent)
+        }
+
+        .price {
+            font-weight: 700
+        }
+
+        .mrp {
+            color: var(--muted);
+            text-decoration: line-through;
+            margin-left: 6px;
+            font-size: 12px
+        }
+
+        .see-all {
+            font-size: 14px;
+            color: #2563eb;
+            text-decoration: none
+        }
+
+        /* Spotlight chips */
+        .chips {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 16px
+        }
+
+        @media (max-width:1000px) {
+            .chips {
+                grid-template-columns: repeat(5, 1fr)
+            }
+        }
+
+        @media (max-width:700px) {
+            .chips {
+                grid-template-columns: repeat(3, 1fr)
+            }
+        }
+
+        .chip {
+            background: var(--chip);
+            border: 1px solid #ececec;
+            border-radius: 18px;
+            padding: 12px;
+            text-align: center
+        }
+
+        .chip .thumb {
+            height: 78px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            margin-bottom: 8px
+        }
+
+        .chip b {
+            display: block;
+            font-size: 13px
+        }
+
+        /* Grocery & Kitchen */
+        .gk-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 18px
+        }
+
+        @media (max-width:1200px) {
+            .gk-grid {
+                grid-template-columns: repeat(6, 1fr)
+            }
+        }
+
+        @media (max-width:1000px) {
+            .gk-grid {
+                grid-template-columns: repeat(5, 1fr)
+            }
+        }
+
+        @media (max-width:800px) {
+            .gk-grid {
+                grid-template-columns: repeat(3, 1fr)
+            }
+        }
+
+        @media (max-width:520px) {
+            .gk-grid {
+                grid-template-columns: repeat(2, 1fr)
+            }
+        }
+
+        .gk-card {
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 22px;
+            padding: 14px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: transform .15s
+        }
+
+        .gk-card:hover {
+            transform: translateY(-2px)
+        }
+
+        .gk-thumb {
+            height: 88px;
+            border-radius: 14px;
+            background: linear-gradient(180deg, #f8fafc, #eef2f7);
+            margin-bottom: 8px
+        }
+
+        .gk-card .label {
+            font-weight: 600;
+            font-size: 14px
+        }
+
+        /* tiny helpers */
+        .sub {
+            font-size: 13px;
+            color: var(--muted)
+        }
+
+        .mt-8 {
+            margin-top: 8px
+        }
+
+        .mt-16 {
+            margin-top: 16px
+        }
+
+        .mt-20 {
+            margin-top: 20px
+        }
+
+        .mt-24 {
+            margin-top: 24px
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container header-wrap">
+            <div>
+                <div class="logo">Instamart <b style="border-radius: 10px;padding-left: 10px;padding-right: 10px;color: white; background-color: #4f7ad8;margin-left: 20px;">Quick Services</b></div>
+                <div class="bolt">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M11 21 20 8h-6l1-7-9 13h6l-1 7z" />
+                    </svg>
+                    5 MINS delivery
+                </div>
+            </div>
+            <div class="spacer"></div>
+            <button class="search-btn" aria-label="Search">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="M21 21l-4.3-4.3"></path>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Top categories grid (screenshot #1) -->
+        <section class="section">
+            <div class="top-grid">
+                <!-- Repeat 12 tiles to mimic Instamart header tiles -->
+                <div class="cat-card">
+                    <div class="cat-img"></div>
+                    <div class="cat-title">Deals – New every hour</div><span class="discount">UP TO 85% OFF</span>
+                </div>
+                <div class="cat-card">
+                    <div class="cat-img"></div>
+                    <div class="cat-title">Electronics, mobiles & more</div><span class="discount">UP TO 85% OFF</span>
+                </div>
+                <div class="cat-card">
+                    <div class="cat-img"></div>
+                    <div class="cat-title">Cleaning needs</div><span class="discount">UP TO 50% OFF</span>
+                </div>
+                <div class="cat-card">
+                    <div class="cat-img"></div>
+                    <div class="cat-title">Home & kitchen</div><span class="discount">UP TO 75% OFF</span>
+                </div>
+                <div class="cat-card">
+                    <div class="cat-img"></div>
+                    <div class="cat-title">Cetaphil</div><span class="discount">UP TO 45% OFF</span>
+                </div>
+                <div class="cat-card">
+                    <div class="cat-img"></div>
+                    <div class="cat-title">Indulgence corner</div><span class="discount">UP TO 50% OFF</span>
+                </div>
+                <div class="cat-card">
+                    <div class="cat-img"></div>
+                    <div class="cat-title">Beauty & personal care</div><span class="discount">UP TO 70% OFF</span>
+                </div>
+                <div class="cat-card">
+                    <div class="cat-img"></div>
+                    <div class="cat-title">Baby care</div><span class="discount">UP TO 80% OFF</span>
+                </div>
+                <div class="cat-card">
+                    <div class="cat-img"></div>
+                    <div class="cat-title">Toys & stationery</div><span class="discount">UP TO 65% OFF</span>
+                </div>
+                <div class="cat-card">
+                    <div class="cat-img"></div>
+                    <div class="cat-title">Cooking essentials</div><span class="discount">UP TO 60% OFF</span>
+                </div>
+                <div class="cat-card">
+                    <div class="cat-img"></div>
+                    <div class="cat-title">Health, sports & fitness</div><span class="discount">UP TO 70% OFF</span>
+                </div>
+                <div class="cat-card">
+                    <div class="cat-img"></div>
+                    <div class="cat-title">Fashion & accessories</div><span class="discount">UP TO 80% OFF</span>
+                </div>
+            </div>
+            <div class="banner mt-20">Explore Maggi Double Masala on Instamart →</div>
+        </section>
+
+        <!-- Hot deals strip (screenshot #2) -->
+        <section class="section">
+            <div class="row-between">
+                <h2>Hot deals</h2>
+                <a class="see-all" href="#">See All →</a>
+            </div>
+            <div class="strip mt-8">
+                <div class="rail" id="rail">
+                    <!-- Several product cards -->
+                    <article class="deal-card">
+                        <div class="plus" title="Add">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 5v14M5 12h14" />
+                            </svg>
+                        </div>
+                        <div class="deal-img"></div>
+                        <div class="deal-meta"><span class="tag">8% OFF</span><span class="sub">5 MINS</span></div>
+                        <div class="title">Emami Regular Kachchi Ghani...</div>
+                        <div class="sub">825 g</div>
+                        <div class="price">₹169 <span class="mrp">₹185</span></div>
+                    </article>
+
+                    <article class="deal-card">
+                        <div class="plus" title="Add">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 5v14M5 12h14" />
+                            </svg>
+                        </div>
+                        <div class="deal-img"></div>
+                        <div class="deal-meta"><span class="tag">—</span><span class="sub">5 MINS</span></div>
+                        <div class="title">Lay's Magic Masala Chips</div>
+                        <div class="sub">48 g</div>
+                        <div class="price">₹20</div>
+                    </article>
+
+                    <article class="deal-card">
+                        <div class="plus" title="Add">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 5v14M5 12h14" />
+                            </svg>
+                        </div>
+                        <div class="deal-img"></div>
+                        <div class="deal-meta"><span class="tag">1% OFF</span><span class="sub">5 MINS</span></div>
+                        <div class="title">Amul Pasteurised Butter</div>
+                        <div class="sub">100 g</div>
+                        <div class="price">₹61 <span class="mrp">₹62</span></div>
+                    </article>
+
+                    <article class="deal-card">
+                        <div class="plus" title="Add">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 5v14M5 12h14" />
+                            </svg>
+                        </div>
+                        <div class="deal-img"></div>
+                        <div class="deal-meta"><span class="tag">12% OFF</span><span class="sub">5 MINS</span></div>
+                        <div class="title">Emami Healthy & Tasty Rice Bran Oil</div>
+                        <div class="sub">825 g</div>
+                        <div class="price">₹135 <span class="mrp">₹155</span></div>
+                    </article>
+
+                    <article class="deal-card">
+                        <div class="plus" title="Add">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 5v14M5 12h14" />
+                            </svg>
+                        </div>
+                        <div class="deal-img"></div>
+                        <div class="deal-meta"><span class="tag">23% OFF</span><span class="sub">5 MINS</span></div>
+                        <div class="title">Supreme Harvest Crystal Sugar</div>
+                        <div class="sub">1 kg</div>
+                        <div class="price">₹61 <span class="mrp">₹80</span></div>
+                    </article>
+
+                    <article class="deal-card">
+                        <div class="plus" title="Add">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 5v14M5 12h14" />
+                            </svg>
+                        </div>
+                        <div class="deal-img"></div>
+                        <div class="deal-meta"><span class="tag">10% OFF</span><span class="sub">5 MINS</span></div>
+                        <div class="title">Tata Salt, Iodised</div>
+                        <div class="sub">1 kg</div>
+                        <div class="price">₹27 <span class="mrp">₹30</span></div>
+                    </article>
+
+                    <article class="deal-card">
+                        <div class="plus" title="Add">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 5v14M5 12h14" />
+                            </svg>
+                        </div>
+                        <div class="deal-img"></div>
+                        <div class="deal-meta"><span class="tag">53% OFF</span><span class="sub">5 MINS</span></div>
+                        <div class="title">Potato (Aloo)</div>
+                        <div class="sub">1 kg</div>
+                        <div class="price">₹19 <span class="mrp">₹41</span></div>
+                    </article>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>In the Spotlight</h2>
+                <div class="chips mt-16">
+                    <div class="chip">
+                        <div class="thumb"></div><b>Fruits & Vegetables</b>
+                    </div>
+                    <div class="chip">
+                        <div class="thumb"></div><b>Dairy, Bread & Eggs</b>
+                    </div>
+                    <div class="chip">
+                        <div class="thumb"></div><b>Munchies & Drinks</b>
+                    </div>
+                    <div class="chip">
+                        <div class="thumb"></div><b>Cooking Essentials</b>
+                    </div>
+                    <div class="chip">
+                        <div class="thumb"></div><b>Cleaning Needs</b>
+                    </div>
+                    <div class="chip">
+                        <div class="thumb"></div><b>Ice Creams</b>
+                    </div>
+                    <div class="chip">
+                        <div class="thumb"></div><b>Baby Care</b>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Grocery & Kitchen (screenshot #3) -->
+        <section class="section">
+            <h2>GROCERY & KITCHEN</h2>
+            <div class="gk-grid mt-16">
+                <div class="gk-card">
+                    <div class="gk-thumb"></div>
+                    <div class="label">Fresh Vegetables</div>
+                </div>
+                <div class="gk-card">
+                    <div class="gk-thumb"></div>
+                    <div class="label">Fresh Fruits</div>
+                </div>
+                <div class="gk-card">
+                    <div class="gk-thumb"></div>
+                    <div class="label">Dairy, Bread and Eggs</div>
+                </div>
+                <div class="gk-card">
+                    <div class="gk-thumb"></div>
+                    <div class="label">Cereals & Breakfast</div>
+                </div>
+                <div class="gk-card">
+                    <div class="gk-thumb"></div>
+                    <div class="label">Atta, Rice and Dal</div>
+                </div>
+                <div class="gk-card">
+                    <div class="gk-thumb"></div>
+                    <div class="label">Oils and Ghee</div>
+                </div>
+                <div class="gk-card">
+                    <div class="gk-thumb"></div>
+                    <div class="label">Masalas</div>
+                </div>
+                <div class="gk-card">
+                    <div class="gk-thumb"></div>
+                    <div class="label">Dry Fruits & Seeds</div>
+                </div>
+                <div class="gk-card">
+                    <div class="gk-thumb"></div>
+                    <div class="label">Biscuits & Cakes</div>
+                </div>
+                <div class="gk-card">
+                    <div class="gk-thumb"></div>
+                    <div class="label">Tea, Coffee & Milk Drinks</div>
+                </div>
+                <div class="gk-card">
+                    <div class="gk-thumb"></div>
+                    <div class="label">Sauces & Spreads</div>
+                </div>
+                <div class="gk-card">
+                    <div class="gk-thumb"></div>
+                    <div class="label">Meat & Seafood</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Keyboard navigation for carousel
+        const rail = document.getElementById('rail');
+        document.addEventListener('keydown', (e) => {
+            if (['ArrowRight', 'ArrowLeft'].includes(e.key)) {
+                rail.scrollBy({ left: e.key === 'ArrowRight' ? 260 : -260, behavior: 'smooth' });
+            }
+        });
+
+        // === IMAGE MAP ===
+        // Realistic product/category images from Unsplash (free to use)
+        const images = {
+            categories: [
+                'https://images.unsplash.com/photo-1542838132-92c53300491e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&h=200&ixid=MnwxfDB8MXxyYW5kb218MHx8vegetables,fruits|grocery|fresh|food|produce&dpr=1&w=300',
+                'https://images.unsplash.com/photo-1498049794561-7780e7231661?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                'https://images.unsplash.com/photo-1585421514284-efb74c2b69ba?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                'https://images.unsplash.com/photo-1519750783826-e2420f4d687f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&h=200&ixid=MnwxfDB8MXxyYW5kb218MHx8kitchen|utensils|home|cookware&dpr=1&w=300',
+                'https://images.unsplash.com/photo-1643747238009-6863ea63e78d?q=80&w=1117&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                'https://images.unsplash.com/photo-1565958011703-44f9829ba187?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&h=200&ixid=MnwxfDB8MXxyYW5kb218MHx8chocolates|snacks|treats&dpr=1&w=300',
+                'https://images.unsplash.com/photo-1602585578130-c9076e09330d?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                'https://images.unsplash.com/photo-1491013516836-7db643ee125a?q=80&w=1025&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                'https://images.unsplash.com/photo-1555448049-67b919120e75?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                'https://plus.unsplash.com/premium_photo-1726743707863-e6a862465664?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                'https://images.unsplash.com/photo-1709315859957-3b3583bf364c?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&h=200&ixid=MnwxfDB8MXxyYW5kb218MHx8fashion|clothing|accessories&dpr=1&w=300'
+            ],
+            deals: [
+                'https://images.unsplash.com/photo-1720468750623-39e9a09f5067?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                'https://images.unsplash.com/photo-1741520149946-d2e652514b5a?q=80&w=694&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                'https://plus.unsplash.com/premium_photo-1700440539081-ce9b10dece22?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                'https://plus.unsplash.com/premium_photo-1664391616054-1671f1b7f75d?q=80&w=778&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                'https://plus.unsplash.com/premium_photo-1675855748229-a9de9f1ed214?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                'https://images.unsplash.com/photo-1583832277339-91225387fc20?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&h=200&ixid=MnwxfDB8MXxyYW5kb218MHx8salt|tata|iodised&dpr=1&w=300',
+                'https://images.unsplash.com/photo-1587202372616-d8e0ef8f2c6b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&h=200&ixid=MnwxfDB8MXxyYW5kb218MHx8potato|aloo|vegetable&dpr=1&w=300'
+            ],
+            spotlight: [
+                'https://images.unsplash.com/photo-1587314120477-885d157e8847?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&h=100&ixid=MnwxfDB8MXxyYW5kb218MHx8fruits|vegetables|fresh&dpr=1&w=150',
+                'https://images.unsplash.com/photo-1550259979-e0424f392948?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&h=100&ixid=MnwxfDB8MXxyYW5kb218MHx8dairy|milk|eggs|bread&dpr=1&w=150',
+                'https://images.unsplash.com/photo-1596462500382-fc8a0a36ebf6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&h=100&ixid=MnwxfDB8MXxyYW5kb218MHx8snacks|chips|drinks|beverages&dpr=1&w=150',
+                'https://images.unsplash.com/photo-1600014363104-dc910438c995?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&h=100&ixid=MnwxfDB8MXxyYW5kb218MHx8cooking|essentials|spices|oil&dpr=1&w=150',
+                'https://images.unsplash.com/photo-1584132967447-6c577d5baca8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&h=100&ixid=MnwxfDB8MXxyYW5kb218MHx8cleaning|supplies|home|care&dpr=1&w=150',
+                'https://images.unsplash.com/photo-1579809633699-1c4d9a00926f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&h=100&ixid=MnwxfDB8MXxyYW5kb218MHx8ice|cream|dessert&dpr=1&w=150',
+                'https://images.unsplash.com/photo-1587049352851-8d4e89133925?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&h=100&ixid=MnwxfDB8MXxyYW5kb218MHx8baby|care|products&dpr=1&w=150'
+            ],
+            grocery: [
+                'https://images.unsplash.com/photo-1587269503643-958e089265fd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&h=100&ixid=MnwxfDB8MXxyYW5kb218MHx8vegetables|fresh|produce&dpr=1&w=150',
+                'https://images.unsplash.com/photo-1587314120477-885d157e8847?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&h=100&ixid=MnwxfDB8MXxyYW5kb218MHx8fruits|fresh|apples|oranges&dpr=1&w=150',
+                'https://images.unsplash.com/photo-1550259979-e0424f392948?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&h=100&ixid=MnwxfDB8MXxyYW5kb218MHx8dairy|eggs|bread|milk&dpr=1&w=150',
+                'https://images.unsplash.com/photo-1595433371598-9f236fed9d70?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&h=100&ixid=MnwxfDB8MXxyYW5kb218MHx8cereal|breakfast|oats&dpr=1&w=150',
+                'https://images.unsplash.com/photo-1615887027588-8582a71c9887?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&h=100&ixid=MnwxfDB8MXxyYW5kb218MHx8atta|rail|dal|wheat&dpr=1&w=150',
+                'https://images.unsplash.com/photo-1605994003448-4a23d7c7c8e3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&h=100&ixid=MnwxfDB8MXxyYW5kb218MHx8oil|ghee|cooking&dpr=1&w=150',
+                'https://images.unsplash.com/photo-1596462502278-27bfdc403348?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&h=100&ixid=MnwxfDB8MXxyYW5kb218MHx8masalas|spices|turmeric&dpr=1&w=150',
+                'https://images.unsplash.com/photo-1587288958563-3114682378f0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&h=100&ixid=MnwxfDB8MXxyYW5kb218MHx8dry|fruits|nuts|almonds&dpr=1&w=150',
+                'https://images.unsplash.com/photo-1544988405-09edf898224f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&h=100&ixid=MnwxfDB8MXxyYW5kb218MHx8biscuits|cookies|snacks&dpr=1&w=150',
+                'https://images.unsplash.com/photo-1584586491367-d651bc06500e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&h=100&ixid=MnwxfDB8MXxyYW5kb218MHx8tea|coffee|drink&dpr=1&w=150',
+                'https://images.unsplash.com/photo-1595422624304-5ec9d9b7d7c7c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&h=100&ixid=MnwxfDB8MXxyYW5kb218MHx8sauces|ketchup|spreads&dpr=1&w=150',
+                'https://images.unsplash.com/photo-1565299585902-73054e895c31?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&h=100&ixid=MnwxfDB8MXxyYW5kb218MHx8meat|chicken|seafood&dpr=1&w=150'
+            ]
+        };
+
+        // === Apply Images Dynamically ===
+        document.querySelectorAll('.cat-img').forEach((el, i) => {
+            if (images.categories[i]) {
+                el.style.backgroundImage = `url(${images.categories[i]})`;
+                el.style.backgroundSize = 'cover';
+                el.style.backgroundPosition = 'center';
+                el.style.backgroundColor = '#f8f8fa';
+            }
+        });
+
+        document.querySelectorAll('.deal-img').forEach((el, i) => {
+            if (images.deals[i]) {
+                el.style.backgroundImage = `url(${images.deals[i]})`;
+                el.style.backgroundSize = 'cover';
+                el.style.backgroundPosition = 'center';
+                el.style.backgroundColor = '#f7f7fb';
+            }
+        });
+
+        document.querySelectorAll('.chip .thumb').forEach((el, i) => {
+            if (images.spotlight[i]) {
+                el.style.backgroundImage = `url(${images.spotlight[i]})`;
+                el.style.backgroundSize = 'cover';
+                el.style.backgroundPosition = 'center';
+                el.style.backgroundColor = '#fff';
+            }
+        });
+
+        document.querySelectorAll('.gk-thumb').forEach((el, i) => {
+            if (images.grocery[i]) {
+                el.style.backgroundImage = `url(${images.grocery[i]})`;
+                el.style.backgroundSize = 'cover';
+                el.style.backgroundPosition = 'center';
+                el.style.backgroundColor = '#f8fafc';
+            }
+        });
+    </script>
+</body>
+
+</html>

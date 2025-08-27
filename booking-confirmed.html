@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plumbing Service Booking Confirmed</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f8ff;
+            color: #333;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #0072b5, #00a8e8);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .confirmation-icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.2);
+            width: 100px;
+            height: 100px;
+            line-height: 100px;
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .booking-details {
+            padding: 30px;
+        }
+        
+        .detail-card {
+            background: #f9fafc;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #0072b5;
+        }
+        
+        h2 {
+            color: #0072b5;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        
+        .detail-row {
+            display: flex;
+            margin-bottom: 12px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 12px;
+        }
+        
+        .detail-label {
+            flex: 1;
+            font-weight: 600;
+            color: #555;
+        }
+        
+        .detail-value {
+            flex: 2;
+            color: #333;
+        }
+        
+        .plumber-info {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+            padding: 15px;
+            background: #e6f7ff;
+            border-radius: 8px;
+        }
+        
+        .plumber-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #0072b5;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin-right: 20px;
+        }
+        
+        .plumber-details {
+            flex: 1;
+        }
+        
+        .plumber-name {
+            font-weight: 600;
+            font-size: 18px;
+            color: #0072b5;
+        }
+        
+        .plumber-rating {
+            color: #ff9900;
+            margin: 5px 0;
+        }
+        
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 30px;
+            background: #f9fafc;
+            border-top: 1px solid #eee;
+        }
+        
+        .btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .btn-back {
+            background: #f5f7fa;
+            color: #0072b5;
+            border: 1px solid #0072b5;
+        }
+        
+        .btn-back:hover {
+            background: #e8ebf3;
+        }
+        
+        .btn-next {
+            background: #0072b5;
+            color: white;
+        }
+        
+        .btn-next:hover {
+            background: #005a8f;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn i {
+            margin-right: 8px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #777;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+        
+        .emergency-contact {
+            text-align: center;
+            padding: 15px;
+            background: #fff4e6;
+            border-radius: 8px;
+            margin-top: 20px;
+            border: 1px dashed #ff9900;
+        }
+        
+        @media (max-width: 600px) {
+            .detail-row {
+                flex-direction: column;
+            }
+            
+            .detail-label {
+                margin-bottom: 5px;
+            }
+            
+            .button-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+            
+            .plumber-info {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .plumber-avatar {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="confirmation-icon">
+                <i class="fas fa-wrench"></i>
+            </div>
+            <h1>Plumbing Service Confirmed!</h1>
+            <p>Your plumbing service request has been successfully booked</p>
+        </header>
+        
+        <section class="booking-details">
+            <div class="detail-card">
+                <h2>Service Details</h2>
+                <div class="detail-row">
+                    <div class="detail-label">Service Type</div>
+                    <div class="detail-value">Pipe Repair & Leak Fixing</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Date & Time</div>
+                    <div class="detail-value">June 15, 2023 at 10:00 AM</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Estimated Duration</div>
+                    <div class="detail-value">2-3 hours</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Service Address</div>
+                    <div class="detail-value">123 Main Street, Apt 4B, New York, NY 10001</div>
+                </div>
+            </div>
+            
+            <div class="detail-card">
+                <h2>Plumber Information</h2>
+                <div class="plumber-info">
+                    <div class="plumber-avatar">
+                        <i class="fas fa-user-hard-hat"></i>
+                    </div>
+                    <div class="plumber-details">
+                        <div class="plumber-name">Michael Johnson</div>
+                        <div class="plumber-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            4.7 (128 reviews)
+                        </div>
+                        <div>Licensed & Insured Plumber</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="detail-card">
+                <h2>Payment Information</h2>
+                <div class="detail-row">
+                    <div class="detail-label">Service Fee</div>
+                    <div class="detail-value">$145.00 (includes diagnostic)</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Parts & Materials</div>
+                    <div class="detail-value">Will be calculated after assessment</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Payment Method</div>
+                    <div class="detail-value">Credit Card (ending in 4567)</div>
+                </div>
+            </div>
+            
+            <div class="emergency-contact">
+                <h3><i class="fas fa-exclamation-circle"></i> Emergency Contact</h3>
+                <p>If your plumber is running late or you have an urgent question, call our support line at <strong>1-800-PLUMBER</strong></p>
+            </div>
+        </section>
+        
+        <div class="button-container">
+           <a href="./book-service.html"> <button class="btn btn-back" onclick="goBack()">
+                <i class="fas fa-arrow-left"></i> Go Back
+            </button></a>
+            <a href="./tracking.html">
+                <button class="btn btn-next" onclick="proceedNext()">
+                Next <i class="fas fa-arrow-right"></i>
+            </button>
+            </a>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Need to modify your booking? Contact us at support@plumbpro.com or call 1-800-PLUMBER</p>
+        <p>© 2023 PlumbPro. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function goBack() {
+            // In a real application, this would take the user to the previous page
+            alert('Going back to service selection...');
+            // window.history.back(); // Uncomment for real implementation
+        }
+        
+        function proceedNext() {
+            // In a real application, this would proceed to the next step
+            alert('Proceeding to service details...');
+            // window.location.href = 'service-details.html'; // Uncomment for real implementation
+        }
+    </script>
+</body>
+</html>

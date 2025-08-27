@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Review | Instamart Quick Service</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <style>
+        /* Reset & Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+            background-color: #f5fbff;
+            color: #121212;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .page-container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .container {
+            flex: 1;
+            padding: 24px;
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 6px 24px rgba(0, 191, 255, 0.12);
+            margin-bottom: 20px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 22px;
+        }
+
+        .header h1 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #00BFFF;
+            margin: 8px 0;
+        }
+
+        .header p {
+            font-size: 0.95rem;
+            color: #555;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            background: #e0f7ff;
+            color: #00BFFF;
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 5px 12px;
+            border-radius: 20px;
+            margin-top: 10px;
+            gap: 6px;
+        }
+
+        .badge i {
+            font-size: 0.9rem;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        label {
+            display: block;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #121212;
+            margin-bottom: 9px;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #d0ebff;
+            border-radius: 12px;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: #00BFFF;
+            box-shadow: 0 0 0 3px rgba(0, 191, 255, 0.2);
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        /* Star Rating */
+        .rating {
+            display: flex;
+            gap: 10px;
+            margin-top: 6px;
+        }
+
+        .rating input {
+            display: none;
+        }
+
+        .rating label {
+            font-size: 30px;
+            color: #ddd;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .rating label:hover,
+        .rating label:hover~label,
+        .rating input:checked~label {
+            color: #00BFFF;
+            transform: scale(1.15);
+        }
+
+        /* Upload Area */
+        .upload-area {
+            border: 2px dashed #d0ebff;
+            border-radius: 14px;
+            padding: 22px 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background-color: #f0f9ff;
+        }
+
+        .upload-area:hover {
+            border-color: #00BFFF;
+            background-color: #e6f4ff;
+        }
+
+        .upload-area i {
+            font-size: 40px;
+            color: #00BFFF;
+            margin-bottom: 10px;
+        }
+
+        .upload-area p {
+            font-size: 0.95rem;
+            color: #555;
+        }
+
+        .upload-area input {
+            display: none;
+        }
+
+        .uploaded-filename {
+            margin-top: 10px;
+            font-size: 0.92rem;
+            color: #00BFFF;
+            font-weight: 600;
+        }
+
+        /* Extra Money Question */
+        .more-money {
+            display: flex;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .more-money input[type="radio"] {
+            display: none;
+        }
+
+        .more-money label {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #f0f9ff;
+            border: 1px solid #d0ebff;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: normal;
+        }
+
+        .more-money input[type="radio"]:checked+label {
+            background: #00BFFF;
+            color: white;
+            border-color: #00BFFF;
+        }
+
+        /* Navigation Buttons */
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            padding: 14px 20px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-back {
+            background: #f5fbff;
+            color: #00BFFF;
+            border: 1px solid #d0ebff;
+        }
+
+        .btn-back:hover {
+            background: #e0f7ff;
+        }
+
+        .btn-next {
+            background: #00BFFF;
+            color: white;
+        }
+
+        .btn-next:hover {
+            background: #00a3db;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 191, 255, 0.3);
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            background-color: #00BFFF;
+            color: white;
+            border: none;
+            padding: 16px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            border-radius: 12px;
+            width: 100%;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            background-color: #00a3db;
+            transform: translateY(-2px);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 24px;
+            color: #888;
+            font-size: 0.85rem;
+        }
+
+        .footer strong {
+            color: #00BFFF;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="page-container">
+        <div class="container">
+            <!-- Header -->
+            <div class="header">
+                <h1>Share Your Experience</h1>
+                <p>We value your feedback to make our service even faster and better.</p>
+                <div class="badge">
+                    <i class="fas fa-bolt"></i> Quick 5-Minute Review
+                </div>
+            </div>
+
+            <!-- Review Form -->
+            <form id="reviewForm" enctype="multipart/form-data">
+                <!-- Name -->
+                <div class="form-group">
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" name="name" placeholder="Enter your full name" required />
+                </div>
+
+                <!-- Upload Photo -->
+                <div class="form-group">
+                    <label>Upload a photo (Optional)</label>
+                    <label for="file-upload" class="upload-area">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Tap to upload your order or experience</p>
+                        <input type="file" id="file-upload" name="reviewImage" accept="image/*" />
+                        <div id="filename" class="uploaded-filename"></div>
+                    </label>
+                </div>
+
+                <!-- Rating -->
+                <div class="form-group">
+                    <label>How was your service?</label>
+                    <div class="rating">
+                        <input type="radio" id="star5" name="rating" value="5" required />
+                        <label for="star5"><i class="fas fa-star"></i></label>
+                        <input type="radio" id="star4" name="rating" value="4" />
+                        <label for="star4"><i class="fas fa-star"></i></label>
+                        <input type="radio" id="star3" name="rating" value="3" />
+                        <label for="star3"><i class="fas fa-star"></i></label>
+                        <input type="radio" id="star2" name="rating" value="2" />
+                        <label for="star2"><i class="fas fa-star"></i></label>
+                        <input type="radio" id="star1" name="rating" value="1" />
+                        <label for="star1"><i class="fas fa-star"></i></label>
+                    </div>
+                </div>
+
+                <!-- Extra Money Question -->
+                <div class="form-group">
+                    <label>Did the service provider ask for more money?</label>
+                    <div class="more-money">
+                        <input type="radio" id="yes" name="extra_money" value="yes" required>
+                        <label for="yes">Yes</label>
+
+                        <input type="radio" id="no" name="extra_money" value="no">
+                        <label for="no">No</label>
+                    </div>
+                </div>
+
+                <!-- Review Text -->
+                <div class="form-group">
+                    <label for="review">Your Feedback</label>
+                    <textarea id="review" name="review" placeholder="Was your service on time? Tell us everything!"
+                        required></textarea>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-paper-plane"></i> Submit Feedback
+                </button>
+            </form>
+
+            <!-- Navigation Buttons -->
+            <div class="navigation-buttons">
+                <a href="./tracking.html"> <button class="nav-btn btn-back" onclick="goBack()">
+                    <i class="fas fa-arrow-left"></i> Back
+                </button></a>               
+                <a href="./index.html"><button class="nav-btn btn-next" onclick="goNext()">
+                    Next <i class="fas fa-arrow-right"></i>
+                </button></a>
+            </div>
+
+            <!-- Footer -->
+            <div class="footer">
+                Brought to you by <strong>Instamart Quick Services</strong> • Speed you can trust
+            </div>
+        </div>
+    </div>
+
+    <!-- Script to show filename -->
+    <script>
+        document.getElementById('file-upload')?.addEventListener('change', function (e) {
+            const file = e.target.files[0];
+            const filenameEl = document.getElementById('filename');
+            filenameEl.textContent = file ? `📎 ${file.name}` : '';
+        });
+
+        // Navigation functions
+        function goBack() {
+            alert('Going back to previous page...');
+            // In a real application: window.history.back() or specific navigation
+        }
+
+        function goNext() {
+            alert('Proceeding to next step...');
+            // In a real application: window.location.href = 'next-page.html'
+        }
+
+        // Form submission
+        document.getElementById('reviewForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your feedback! Your review has been submitted.');
+            // In a real application: submit form data to server
+        });
+    </script>
+
+</body>
+
+</html>
