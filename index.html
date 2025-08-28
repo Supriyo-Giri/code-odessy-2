@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -9,112 +10,445 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <style>
-    :root{
-      --bg:#ffffff;
-      --text:#111315;
-      --muted:#6b6f76;
-      --card:#f8f8fa;
-      --chip:#f3f4f6;
-      --accent:#00a082; /* teal-ish add button */
-      --brand:#f05a28; /* bolt */
-      --ring:rgba(0,0,0,.08);
-      --shadow:0 2px 10px rgba(0,0,0,.06), 0 1px 3px rgba(0,0,0,.06);
-      --radius:16px;
+    :root {
+      --bg: #ffffff;
+      --text: #111315;
+      --muted: #6b6f76;
+      --card: #f8f8fa;
+      --chip: #f3f4f6;
+      --accent: #00a082;
+      /* teal-ish add button */
+      --brand: #f05a28;
+      /* bolt */
+      --ring: rgba(0, 0, 0, .08);
+      --shadow: 0 2px 10px rgba(0, 0, 0, .06), 0 1px 3px rgba(0, 0, 0, .06);
+      --radius: 16px;
     }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0; background:var(--bg); color:var(--text); font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; line-height:1.35;
+
+    * {
+      box-sizing: border-box
     }
-    .container{max-width:1200px; margin:0 auto; padding:0 20px}
+
+    html,
+    body {
+      height: 100%
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Poppins, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.35;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      /* padding: 20px; */
+
+    }
 
     /* Header */
-    header{position:sticky; top:0; z-index:50; background:var(--bg); border-bottom:1px solid #eee}
-    .header-wrap{display:flex; align-items:center; gap:16px; height:72px}
-    .logo{font-weight:700; font-size:24px; letter-spacing:.2px}
-    .bolt{display:inline-flex; align-items:center; gap:8px; font-weight:600; color:var(--muted); font-size:14px}
-    .bolt svg{width:16px; height:16px; color:var(--brand)}
-    .spacer{flex:1}
-    .search-btn{width:40px; height:40px; border-radius:999px; display:grid; place-items:center; border:1px solid #e6e6e6; background:#fff}
-    .search-btn svg{width:20px; height:20px; color:#333}
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--bg);
+      border-bottom: 1px solid #eee;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .header-wrap {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      height: 72px
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 24px;
+      letter-spacing: .2px;
+      /* border: 1px solid black; */
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      padding: 15px;
+      /* justify-content: space-between; */
+    }
+
+    .bolt {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      color: var(--muted);
+      font-size: 14px
+    }
+
+    .bolt svg {
+      width: 16px;
+      height: 16px;
+      color: var(--brand)
+    }
+
+    .spacer {
+      flex: 1
+    }
+
+    .search-btn {
+      border: none;
+      /* color: white; */
+      /* background-color: #2563eb; */
+      padding: 10px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: larger;
+      border: 1px solid #2563eb;
+    }
+    .search-btn :hover{
+      transform: scale(1.05);
+    }
+
+    .search-btn svg {
+      width: 20px;
+      height: 20px;
+      color: #333
+    }
 
     /* Top category grid */
-    .section{padding:24px 0}
-    .section h2{font-size:22px; margin:0 0 16px}
-    .top-grid{display:grid; grid-template-columns:repeat(6,1fr); gap:16px}
-    @media (max-width:1000px){.top-grid{grid-template-columns:repeat(4,1fr)}}
-    @media (max-width:700px){.top-grid{grid-template-columns:repeat(3,1fr)}}
-    @media (max-width:480px){.top-grid{grid-template-columns:repeat(2,1fr)}}
+    .section {
+      padding: 24px 0
+    }
 
-    .cat-card{background:#fff; border:1px solid #eee; border-radius:20px; padding:14px; box-shadow:var(--shadow); position:relative; transition:transform .15s ease, box-shadow .15s ease}
-    .cat-card:hover{transform:translateY(-2px); box-shadow:0 6px 22px rgba(0,0,0,.08)}
-    .cat-img{height:72px; background:linear-gradient(180deg,#f8fafc,#eef2f7); border-radius:14px; margin-bottom:10px}
-    .cat-title{font-size:13px; color:#333}
-    .discount{position:absolute; bottom:10px; left:12px; background:#e9fff6; color:#198754; border:1px solid #b7f0d9; font-size:11px; font-weight:700; padding:4px 8px; border-radius:999px}
+    .section h2 {
+      font-size: 22px;
+      margin: 0 0 16px
+    }
+
+    .top-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 16px
+    }
+
+    @media (max-width:1000px) {
+      .top-grid {
+        grid-template-columns: repeat(4, 1fr)
+      }
+    }
+
+    @media (max-width:700px) {
+      .top-grid {
+        grid-template-columns: repeat(3, 1fr)
+      }
+    }
+
+    @media (max-width:480px) {
+      .top-grid {
+        grid-template-columns: repeat(2, 1fr)
+      }
+    }
+
+    .cat-card {
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 20px;
+      padding: 14px;
+      box-shadow: var(--shadow);
+      position: relative;
+      transition: transform .15s ease, box-shadow .15s ease
+    }
+
+    .cat-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 22px rgba(0, 0, 0, .08)
+    }
+
+    .cat-img {
+      height: 72px;
+      background: linear-gradient(180deg, #f8fafc, #eef2f7);
+      border-radius: 14px;
+      margin-bottom: 10px
+    }
+
+    .cat-title {
+      font-size: 13px;
+      color: #333
+    }
+
+    .discount {
+      position: absolute;
+      bottom: 10px;
+      left: 12px;
+      background: #e9fff6;
+      color: #198754;
+      border: 1px solid #b7f0d9;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 999px
+    }
 
     /* Banner */
-    .banner{background:#ffe1cf; border-radius:18px; height:96px; display:flex; align-items:center; justify-content:center; font-weight:600; letter-spacing:.2px; border:1px dashed #f3b292}
+    .banner {
+      background: #ffe1cf;
+      border-radius: 18px;
+      height: 96px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      letter-spacing: .2px;
+      border: 1px dashed #f3b292
+    }
 
     /* Hot deals carousel */
-    .row-between{display:flex; align-items:center; justify-content:space-between}
-    .strip{position:relative}
-    .rail{display:flex; gap:16px; overflow:auto; scroll-snap-type:x mandatory; padding-bottom:8px}
-    .rail::-webkit-scrollbar{height:8px}
-    .rail::-webkit-scrollbar-thumb{background:#e5e7eb; border-radius:999px}
+    .row-between {
+      display: flex;
+      align-items: center;
+      justify-content: space-between
+    }
 
-    .deal-card{min-width:210px; background:#fff; border:1px solid #eee; border-radius:20px; padding:12px; scroll-snap-align:start; box-shadow:var(--shadow); position:relative}
-    .deal-img{height:140px; border-radius:14px; background:linear-gradient(180deg,#f7f7fb,#eef2f7)}
-    .deal-meta{display:flex; align-items:center; gap:8px; margin-top:12px}
-    .tag{font-size:10px; font-weight:700; color:#22c55e; background:#eafff3; border:1px solid #c9f7d7; padding:2px 6px; border-radius:6px}
-    .plus{position:absolute; right:12px; top:12px; width:36px; height:36px; background:#fff; border:1px solid #e5e7eb; border-radius:999px; display:grid; place-items:center; box-shadow:var(--shadow); cursor:pointer}
-    .plus svg{width:18px; height:18px; color:var(--accent)}
+    .strip {
+      position: relative
+    }
 
-    .price{font-weight:700}
-    .mrp{color:var(--muted); text-decoration:line-through; margin-left:6px; font-size:12px}
+    .rail {
+      display: flex;
+      gap: 16px;
+      overflow: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 8px
+    }
 
-    .see-all{font-size:14px; color:#2563eb; text-decoration:none}
+    .rail::-webkit-scrollbar {
+      height: 8px
+    }
+
+    .rail::-webkit-scrollbar-thumb {
+      background: #e5e7eb;
+      border-radius: 999px
+    }
+
+    .deal-card {
+      min-width: 210px;
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 20px;
+      padding: 12px;
+      scroll-snap-align: start;
+      box-shadow: var(--shadow);
+      position: relative
+    }
+
+    .deal-img {
+      height: 140px;
+      border-radius: 14px;
+      background: linear-gradient(180deg, #f7f7fb, #eef2f7)
+    }
+
+    .deal-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 12px
+    }
+
+    .tag {
+      font-size: 10px;
+      font-weight: 700;
+      color: #22c55e;
+      background: #eafff3;
+      border: 1px solid #c9f7d7;
+      padding: 2px 6px;
+      border-radius: 6px
+    }
+
+    .plus {
+      position: absolute;
+      right: 12px;
+      top: 12px;
+      width: 36px;
+      height: 36px;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      box-shadow: var(--shadow);
+      cursor: pointer
+    }
+
+    .plus svg {
+      width: 18px;
+      height: 18px;
+      color: var(--accent)
+    }
+
+    .price {
+      font-weight: 700
+    }
+
+    .mrp {
+      color: var(--muted);
+      text-decoration: line-through;
+      margin-left: 6px;
+      font-size: 12px
+    }
+
+    .see-all {
+      font-size: 14px;
+      color: #2563eb;
+      text-decoration: none
+    }
 
     /* Spotlight chips */
-    .chips{display:grid; grid-template-columns:repeat(7,1fr); gap:16px}
-    @media (max-width:1000px){.chips{grid-template-columns:repeat(5,1fr)}}
-    @media (max-width:700px){.chips{grid-template-columns:repeat(3,1fr)}}
-    .chip{background:var(--chip); border:1px solid #ececec; border-radius:18px; padding:12px; text-align:center}
-    .chip .thumb{height:78px; background:#fff; border-radius:12px; box-shadow:var(--shadow); margin-bottom:8px}
-    .chip b{display:block; font-size:13px}
+    .chips {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 16px
+    }
+
+    @media (max-width:1000px) {
+      .chips {
+        grid-template-columns: repeat(5, 1fr)
+      }
+    }
+
+    @media (max-width:700px) {
+      .chips {
+        grid-template-columns: repeat(3, 1fr)
+      }
+    }
+
+    .chip {
+      background: var(--chip);
+      border: 1px solid #ececec;
+      border-radius: 18px;
+      padding: 12px;
+      text-align: center
+    }
+
+    .chip .thumb {
+      height: 78px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      margin-bottom: 8px
+    }
+
+    .chip b {
+      display: block;
+      font-size: 13px
+    }
 
     /* Grocery & Kitchen */
-    .gk-grid{display:grid; grid-template-columns:repeat(7,1fr); gap:18px}
-    @media (max-width:1200px){.gk-grid{grid-template-columns:repeat(6,1fr)}}
-    @media (max-width:1000px){.gk-grid{grid-template-columns:repeat(5,1fr)}}
-    @media (max-width:800px){.gk-grid{grid-template-columns:repeat(3,1fr)}}
-    @media (max-width:520px){.gk-grid{grid-template-columns:repeat(2,1fr)}}
-    .gk-card{background:#fff; border:1px solid #eee; border-radius:22px; padding:14px; box-shadow:var(--shadow); text-align:center; transition:transform .15s}
-    .gk-card:hover{transform:translateY(-2px)}
-    .gk-thumb{height:88px; border-radius:14px; background:linear-gradient(180deg,#f8fafc,#eef2f7); margin-bottom:8px}
-    .gk-card .label{font-weight:600; font-size:14px}
+    .gk-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 18px
+    }
+
+    @media (max-width:1200px) {
+      .gk-grid {
+        grid-template-columns: repeat(6, 1fr)
+      }
+    }
+
+    @media (max-width:1000px) {
+      .gk-grid {
+        grid-template-columns: repeat(5, 1fr)
+      }
+    }
+
+    @media (max-width:800px) {
+      .gk-grid {
+        grid-template-columns: repeat(3, 1fr)
+      }
+    }
+
+    @media (max-width:520px) {
+      .gk-grid {
+        grid-template-columns: repeat(2, 1fr)
+      }
+    }
+
+    .gk-card {
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 22px;
+      padding: 14px;
+      box-shadow: var(--shadow);
+      text-align: center;
+      transition: transform .15s
+    }
+
+    .gk-card:hover {
+      transform: translateY(-2px)
+    }
+
+    .gk-thumb {
+      height: 88px;
+      border-radius: 14px;
+      background: linear-gradient(180deg, #f8fafc, #eef2f7);
+      margin-bottom: 8px
+    }
+
+    .gk-card .label {
+      font-weight: 600;
+      font-size: 14px
+    }
 
     /* tiny helpers */
-    .sub{font-size:13px; color:var(--muted)}
-    .mt-8{margin-top:8px}
-    .mt-16{margin-top:16px}
-    .mt-20{margin-top:20px}
-    .mt-24{margin-top:24px}
+    .sub {
+      font-size: 13px;
+      color: var(--muted)
+    }
+
+    .mt-8 {
+      margin-top: 8px
+    }
+
+    .mt-16 {
+      margin-top: 16px
+    }
+
+    .mt-20 {
+      margin-top: 20px
+    }
+
+    .mt-24 {
+      margin-top: 24px
+    }
   </style>
 </head>
+
 <body>
   <header>
     <div class="container header-wrap">
       <div>
-        <div class="logo">Instamart</div>
+
+        <div class="logo"><span style="padding-left: 10px;">Instamart</span></div>
+
         <div class="bolt">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11 21 20 8h-6l1-7-9 13h6l-1 7z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M11 21 20 8h-6l1-7-9 13h6l-1 7z" />
+          </svg>
           5 MINS delivery
         </div>
       </div>
       <div class="spacer"></div>
-      <button class="search-btn" aria-label="Search">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="M21 21l-4.3-4.3"></path></svg>
-      </button>
+      <a href="./customer.html"><button class="search-btn" aria-label="Search">
+        <img src="./logo.jpg" alt="" style="width: 80px;border-radius: 20px;">
+      </button></a>
     </div>
   </header>
 
@@ -123,20 +457,56 @@
     <section class="section">
       <div class="top-grid">
         <!-- Repeat 12 tiles to mimic Instamart header tiles -->
-        <div class="cat-card"><div class="cat-img"></div><div class="cat-title">Deals – New every hour</div><span class="discount">UP TO 85% OFF</span></div>
-        <div class="cat-card"><div class="cat-img"></div><div class="cat-title">Electronics, mobiles & more</div><span class="discount">UP TO 85% OFF</span></div>
-        <div class="cat-card"><div class="cat-img"></div><div class="cat-title">Cleaning needs</div><span class="discount">UP TO 50% OFF</span></div>
-        <div class="cat-card"><div class="cat-img"></div><div class="cat-title">Home & kitchen</div><span class="discount">UP TO 75% OFF</span></div>
-        <div class="cat-card"><div class="cat-img"></div><div class="cat-title">Cetaphil</div><span class="discount">UP TO 45% OFF</span></div>
-        <div class="cat-card"><div class="cat-img"></div><div class="cat-title">Indulgence corner</div><span class="discount">UP TO 50% OFF</span></div>
-        <div class="cat-card"><div class="cat-img"></div><div class="cat-title">Beauty & personal care</div><span class="discount">UP TO 70% OFF</span></div>
-        <div class="cat-card"><div class="cat-img"></div><div class="cat-title">Baby care</div><span class="discount">UP TO 80% OFF</span></div>
-        <div class="cat-card"><div class="cat-img"></div><div class="cat-title">Toys & stationery</div><span class="discount">UP TO 65% OFF</span></div>
-        <div class="cat-card"><div class="cat-img"></div><div class="cat-title">Cooking essentials</div><span class="discount">UP TO 60% OFF</span></div>
-        <div class="cat-card"><div class="cat-img"></div><div class="cat-title">Health, sports & fitness</div><span class="discount">UP TO 70% OFF</span></div>
-        <div class="cat-card"><div class="cat-img"></div><div class="cat-title">Fashion & accessories</div><span class="discount">UP TO 80% OFF</span></div>
+        <div class="cat-card">
+          <div class="cat-img"></div>
+          <div class="cat-title">Deals – New every hour</div><span class="discount">UP TO 85% OFF</span>
+        </div>
+        <div class="cat-card">
+          <div class="cat-img"></div>
+          <div class="cat-title">Electronics, mobiles & more</div><span class="discount">UP TO 85% OFF</span>
+        </div>
+        <div class="cat-card">
+          <div class="cat-img"></div>
+          <div class="cat-title">Cleaning needs</div><span class="discount">UP TO 50% OFF</span>
+        </div>
+        <div class="cat-card">
+          <div class="cat-img"></div>
+          <div class="cat-title">Home & kitchen</div><span class="discount">UP TO 75% OFF</span>
+        </div>
+        <div class="cat-card">
+          <div class="cat-img"></div>
+          <div class="cat-title">Cetaphil</div><span class="discount">UP TO 45% OFF</span>
+        </div>
+        <div class="cat-card">
+          <div class="cat-img"></div>
+          <div class="cat-title">Indulgence corner</div><span class="discount">UP TO 50% OFF</span>
+        </div>
+        <div class="cat-card">
+          <div class="cat-img"></div>
+          <div class="cat-title">Beauty & personal care</div><span class="discount">UP TO 70% OFF</span>
+        </div>
+        <div class="cat-card">
+          <div class="cat-img"></div>
+          <div class="cat-title">Baby care</div><span class="discount">UP TO 80% OFF</span>
+        </div>
+        <div class="cat-card">
+          <div class="cat-img"></div>
+          <div class="cat-title">Toys & stationery</div><span class="discount">UP TO 65% OFF</span>
+        </div>
+        <div class="cat-card">
+          <div class="cat-img"></div>
+          <div class="cat-title">Cooking essentials</div><span class="discount">UP TO 60% OFF</span>
+        </div>
+        <div class="cat-card">
+          <div class="cat-img"></div>
+          <div class="cat-title">Health, sports & fitness</div><span class="discount">UP TO 70% OFF</span>
+        </div>
+        <div class="cat-card">
+          <div class="cat-img"></div>
+          <div class="cat-title">Fashion & accessories</div><span class="discount">UP TO 80% OFF</span>
+        </div>
       </div>
-      <a href="./customer.html" class="banner-link"><div class="banner mt-20">Explore Instamart Quick Services →</div></a>
+      <!-- <a href="./customer.html" class="banner-link"><div class="banner mt-20"><img src="./logo.jpg" alt="" class="logo-insta"></div></a> -->
     </section>
 
     <!-- Hot deals strip (screenshot #2) -->
@@ -150,7 +520,10 @@
           <!-- Several product cards -->
           <article class="deal-card">
             <div class="plus" title="Add">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M12 5v14M5 12h14" />
+              </svg>
             </div>
             <div class="deal-img"></div>
             <div class="deal-meta"><span class="tag">8% OFF</span><span class="sub">5 MINS</span></div>
@@ -161,7 +534,10 @@
 
           <article class="deal-card">
             <div class="plus" title="Add">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M12 5v14M5 12h14" />
+              </svg>
             </div>
             <div class="deal-img"></div>
             <div class="deal-meta"><span class="tag">—</span><span class="sub">5 MINS</span></div>
@@ -172,7 +548,10 @@
 
           <article class="deal-card">
             <div class="plus" title="Add">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M12 5v14M5 12h14" />
+              </svg>
             </div>
             <div class="deal-img"></div>
             <div class="deal-meta"><span class="tag">1% OFF</span><span class="sub">5 MINS</span></div>
@@ -183,7 +562,10 @@
 
           <article class="deal-card">
             <div class="plus" title="Add">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M12 5v14M5 12h14" />
+              </svg>
             </div>
             <div class="deal-img"></div>
             <div class="deal-meta"><span class="tag">12% OFF</span><span class="sub">5 MINS</span></div>
@@ -194,7 +576,10 @@
 
           <article class="deal-card">
             <div class="plus" title="Add">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M12 5v14M5 12h14" />
+              </svg>
             </div>
             <div class="deal-img"></div>
             <div class="deal-meta"><span class="tag">23% OFF</span><span class="sub">5 MINS</span></div>
@@ -205,7 +590,10 @@
 
           <article class="deal-card">
             <div class="plus" title="Add">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M12 5v14M5 12h14" />
+              </svg>
             </div>
             <div class="deal-img"></div>
             <div class="deal-meta"><span class="tag">10% OFF</span><span class="sub">5 MINS</span></div>
@@ -216,7 +604,10 @@
 
           <article class="deal-card">
             <div class="plus" title="Add">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M12 5v14M5 12h14" />
+              </svg>
             </div>
             <div class="deal-img"></div>
             <div class="deal-meta"><span class="tag">53% OFF</span><span class="sub">5 MINS</span></div>
@@ -241,8 +632,8 @@
       </div>
     </section> -->
 
-    <!-- Grocery & Kitchen (screenshot #3) -->
-    <!-- <section class="section">
+      <!-- Grocery & Kitchen (screenshot #3) -->
+      <!-- <section class="section">
       <h2>GROCERY & KITCHEN</h2>
       <div class="gk-grid mt-16">
         <div class="gk-card"><div class="gk-thumb"></div><div class="label">Fresh Vegetables</div></div>
@@ -264,9 +655,9 @@
   <script>
     // Keyboard navigation for carousel
     const rail = document.getElementById('rail');
-    document.addEventListener('keydown', (e)=>{
-      if(['ArrowRight','ArrowLeft'].includes(e.key)){
-        rail.scrollBy({left: e.key==='ArrowRight'? 260 : -260, behavior:'smooth'});
+    document.addEventListener('keydown', (e) => {
+      if (['ArrowRight', 'ArrowLeft'].includes(e.key)) {
+        rail.scrollBy({ left: e.key === 'ArrowRight' ? 260 : -260, behavior: 'smooth' });
       }
     });
 
@@ -359,4 +750,5 @@
     });
   </script>
 </body>
+
 </html>

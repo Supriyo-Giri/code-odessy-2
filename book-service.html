@@ -22,7 +22,15 @@
       line-height: 1.7;
       padding: 15px;
     }
-
+    .something-else{
+    font-weight: 700;
+    border: 2px solid #0288d1;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 10px;
+    color: #01579b;
+    font-size: larger;
+    }
     .container {
       max-width: 900px;
       margin: 20px auto;
@@ -346,7 +354,7 @@
     <div class="form-group">
       <label for="address">Select Address</label>
       <select id="address">
-        <option value="home">Home, 123 Main St, Mumbai</option>
+        <option value="home">Home, Salt Lake, Sector V , Kolkata</option>
         <option value="office">Office, Bandra Tech Park, Mumbai</option>
         <option value="other">+ Add New Address</option>
       </select>
@@ -385,9 +393,10 @@
 
     <!-- Additional Input and Camera -->
     <div class="form-group">
-      <label>Additional Information</label>
+      <!-- <label>Something else?</label> -->
       <div class="input-group">
-        <input type="text" id="additionalInfo" placeholder="Describe your issue or something else...">
+        <!-- <input type="text" id="additionalInfo" placeholder="SOMETHING ELSE?"> -->
+         <p class="something-else">SOMETHING ELSE?</p>
         <label for="imageUpload" class="camera-icon">
           <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiMwMjg4ZDEiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cGF0aCBkPSJNMTIgMTNhMyAzIDAgMSAwIDAgNiAzIDMgMCAwIDAgMC02eiIvPjxwYXRoIGQ9Ik0yMCA5VjdhMiAyIDAgMCAwLTItMkg2YTIgMiAwIDAgMC0yIDJ2Mm0yIDJoMTZhMiAyIDAgMCAxIDIgMnY4YTIgMiAwIDAgMS0yIDJINGEyIDIgMCAwIDEtMi0ydi04YTIgMiAwIDAgMSAyLTJ6Ii8+PC9zdmc+" alt="Upload Image" width="28" height="28">
         </label>

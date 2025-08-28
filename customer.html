@@ -310,7 +310,15 @@
         .navbar-action {
             margin-left: 32px;
         }
-
+        .services-insta{
+            /* border: 1px solid black;
+             */
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            justify-content: space-between;
+        }
         @keyframes pulseBtn {
 
             0%,
@@ -571,7 +579,17 @@
                 gap: 22px;
             }
         }
+        .service-image-seva{
+                width: 140px;
+                border-radius: 10px;
+                box-shadow: 0 4px 16px rgba(25, 118, 210, 0.2);
+                cursor: pointer;
+                border: 2px solid #97affd;
+            }
+        .service-image-seva :hover{
+            transform: scale(1.05);
 
+        }
         @media (max-width: 700px) {
             .navbar {
                 height: 54px;
@@ -615,6 +633,7 @@
             .service-card {
                 padding: 18px 8px;
             }
+            
         }
     </style>
 </head>
@@ -669,8 +688,8 @@
 
             </nav>
             <!-- Main Content Heading -->
-            <div style="font-size:1.7rem; font-weight:700; color:#0055fe; margin-bottom:24px; letter-spacing:1px;">
-                Services</div>
+            <div style="font-size:1.7rem; font-weight:700; color:#0055fe; margin-bottom:24px; letter-spacing:1px;" class="services-insta">
+                <span>Services</span><a href="./service.html"><img src="./seva.jpg" alt="" class="service-image-seva"></a></div>
         </div>
         <style>
             .service-icon {
